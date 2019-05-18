@@ -10,13 +10,24 @@ function buildTable(data) {
  data.forEach((dataRow) => {
    var row = tbody.append("tr");
 
-   Object.values(dataRow).forEach((value) => {
+   Object.values(dataRow).forEach((val) => {
      var cell = row.append("td");
-     cell.text(value);
+     cell.text(val);
    });
  });
 }
 
-var filters = {};
+function buttonClick() {
+
+	d3.event.preventDefault();
+		let date = d3.select("#datetime").property("value");
+		let filteredData = tableData;
+		if (date) {
+			filteredData = filteredData.filter(row => row.datetime === date);
+		} 
+		buildTable(filteredData);
+}
+
+d3.selectAll("#filter-btn").on("click", buttonClick);
 
 buildTable(tableData);
